@@ -28,7 +28,6 @@ BuildRequires:	perl-Digest-MD5
 Requires:	apache
 Requires:	/etc/cron.d
 Prereq:		rc-scripts
-Requires:	rc-scripts
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -94,8 +93,7 @@ install %{SOURCE2}		$RPM_BUILD_ROOT/etc/rc.d/init.d/demarcd
 install %{SOURCE3}		$RPM_BUILD_ROOT/etc/cron.d/%{name}
 install bin/demarcd		$RPM_BUILD_ROOT%{_sbindir}
 install conf/*			$RPM_BUILD_ROOT/etc/demarcd
-cp -ar  cgi			$RPM_BUILD_ROOT%{_datadir}/demarc
-cp -ar  images			$RPM_BUILD_ROOT%{_datadir}/demarc
+cp -ar  cgi images		$RPM_BUILD_ROOT%{_datadir}/demarc
 install install/{c*,d*,p*}	$RPM_BUILD_ROOT%{_datadir}/demarc
 
 gzip -9nf install/{CHAN*,INS*,LIC*}
