@@ -8,10 +8,6 @@ Version:	%{ver}.%{subver}
 Release:	3
 License:	http://www.demarc.org/license/ (Free for non-commercial use)
 Group:		Networking
-Group(de):	Netzwerkwesen
-Group(es):	Red
-Group(pl):	Sieciowe
-Group(pt_BR):	Rede
 Source0:	http://www.demarc.org/downloads/demarc-105/%{name}-%{ver}-%{subver}.tar.gz
 Source1:	%{name}-apache.conf
 Source2:	%{name}.init
@@ -64,10 +60,6 @@ Summary:	Network monitoring program - client
 Summary(pl):	Program do monitorowania sieci - klient
 Requires:	snort(mysql) >= 1.8.1
 Group:		Networking
-Group(de):	Netzwerkwesen
-Group(es):	Red
-Group(pl):	Sieciowe
-Group(pt_BR):	Rede
 
 %description client
 DEMARC is an all-inclusive network monitoring program that allows you
