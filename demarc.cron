@@ -1,0 +1,3 @@
+# It's very important to have demarcd running
+*/15 * * * *    root    /bin/sh -c "if (/etc/rc.d/init.d/demarcd status | grep -q 'dead but pid file exists'); then /etc/rc.d/init.d/demarcd restart > /dev/null; fi"
+
