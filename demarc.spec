@@ -5,7 +5,7 @@ Summary:	Network monitoring program
 Summary(pl):	Program do monitorowania sieci
 Name:		demarc
 Version:	%{ver}.%{subver}
-Release:	2
+Release:	3
 License:	http://www.demarc.org/license/ (Free for non-commercial use)
 Group:		Networking
 Group(de):	Netzwerkwesen
