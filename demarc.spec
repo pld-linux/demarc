@@ -28,6 +28,7 @@ BuildRequires:	perl-Digest-MD5
 Requires:	apache
 Requires:	/etc/cron.d
 Prereq:		rc-scripts
+Prereq:		/sbin/chkconfig
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
