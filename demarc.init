@@ -2,7 +2,7 @@
 #
 # demarcd	Network monitoring daemon
 #
-# chkconfig:	345 50 50
+# chkconfig:	345 96 50
 # description:	Netowk monitoring daemon which uses snort as NIDS
 #
 
