@@ -127,7 +127,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc install/{CHAN*,INS*,LIC*} 
+%doc install/{CHAN*,INS*,LIC*}
 %dir %{_datadir}/demarc
 %{_datadir}/demarc/create_mysql_demarc
 %{_datadir}/demarc/db_patch_queries
