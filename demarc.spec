@@ -5,7 +5,7 @@ Summary:	Network monitoring program
 Summary(pl):	Program do monitorowania sieci
 Name:		demarc
 Version:	%{ver}.%{subver}
-Release:	3
+Release:	4
 License:	http://www.demarc.org/license/ (Free for non-commercial use)
 Group:		Networking
 Source0:	http://www.demarc.org/downloads/demarc-105/%{name}-%{ver}-%{subver}.tar.gz
@@ -16,13 +16,13 @@ Source3:	%{name}.cron
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-whois-fix.patch
 URL:		http://www.demarc.org/
-BuildRequires:	rpm-perlprov >= 4.0
-BuildRequires:	perl >= 5.6
+BuildRequires:	perl-Apache-DBI
 BuildRequires:	perl-CGI
 BuildRequires:	perl-DBI
-BuildRequires:	perl-Msql-Mysql-modules
 BuildRequires:	perl-Digest-MD5
-# BuildRequires:	perl(Apache::DBI)  (what package? FIXME)
+BuildRequires:	perl-Msql-Mysql-modules
+BuildRequires:	perl-devel >= 1:5.6
+BuildRequires:	rpm-perlprov >= 4.1-13
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	apache
