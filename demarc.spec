@@ -70,7 +70,7 @@ interface.
 This is client program which should be installed on all monitored
 servers.
 
-%description -l pl client
+%description client -l pl
 DEMARC to kompletny system monitorowania sieci pozwalaj±cy monitorowaæ
 ca³± sieæ serwerów z jednego interfejsu www.
 
