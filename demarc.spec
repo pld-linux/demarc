@@ -86,7 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,cron.d,demarcd,httpd}
 install -d $RPM_BUILD_ROOT%{_sbindir}
 install -d $RPM_BUILD_ROOT%{_datadir}/demarc/{images,cgi}
-install -d $RPM_BUILD_ROOT/var/state/demarcd
+install -d $RPM_BUILD_ROOT/%{_var}/lib/demarcd
 
 install %{SOURCE1}		$RPM_BUILD_ROOT/etc/httpd/%{name}.conf
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc/rc.d/init.d/demarcd
@@ -156,4 +156,4 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/demarcd/*.conf
 %attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/demarcd/*.cmds
 %attr(640,root,root) %config /etc/cron.d/%{name}
-%attr(750,root,root) /var/state/demarcd
+%attr(750,root,root) %{_var}/lib/demarcd
