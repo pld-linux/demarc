@@ -15,6 +15,7 @@ Group(pt_BR):	Rede
 Source0:	http://www.demarc.org/downloads/demarc-105/demarc-%{ver}-%{subver}.tar.gz
 Source1:	%{name}-apache.conf
 Source2:	%{name}.init
+Source3:	%{name}.cron
 Patch0:		%{name}-config.patch
 URL:		http://www.demarc.org/
 BuildRequires:	rpm-perlprov >= 4.0
@@ -25,10 +26,12 @@ BuildRequires:	perl-Msql-Mysql-modules
 BuildRequires:	perl-Digest-MD5
 # BuildRequires:  perl(Apache::DBI)  (what package? FIXME)
 Requires:	apache
+Requires:	/etc/cron.d
+Prereq:		rc-scripts
+Requires:	rc-scripts
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_sysconfdir	/etc/snort
 %define		_bindir		%{_sbindir}
 
 %description
@@ -81,13 +84,14 @@ monitorowanych serwerach.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,demarcd,httpd}
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,cron.d,demarcd,httpd}
 install -d $RPM_BUILD_ROOT%{_sbindir}
 install -d $RPM_BUILD_ROOT%{_datadir}/demarc/{images,cgi}
 install -d $RPM_BUILD_ROOT/var/state/demarcd
 
 install %{SOURCE1}		$RPM_BUILD_ROOT/etc/httpd/%{name}.conf
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc/rc.d/init.d/demarcd
+install %{SOURCE3}		$RPM_BUILD_ROOT/etc/cron.d/%{name}
 install bin/demarcd		$RPM_BUILD_ROOT%{_sbindir}
 install conf/*			$RPM_BUILD_ROOT/etc/demarcd
 cp -ar  cgi			$RPM_BUILD_ROOT%{_datadir}/demarc
@@ -100,7 +104,9 @@ gzip -9nf install/{CHAN*,INS*,LIC*}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-echo 'Remember to add "Include demarc.conf" do httpd.conf'
+echo 'Remember to add "Include demarc.conf" to httpd.conf and note that'
+echo 'in most cases there is no need to start "snort" as separate'
+echo 'daemon, so turn it off using "/sbin/chkconfig snort off".'
 
 %post client
 if [ "$1" = "1" ] ; then
@@ -142,7 +148,7 @@ fi
 %dir %{_datadir}/demarc/images
 %{_datadir}/demarc/images/*
 
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/httpd//demarc.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/httpd/demarc.conf
 
 %files client
 %defattr(644,root,root,755)
@@ -151,4 +157,5 @@ fi
 %attr(750,root,root) %dir /etc/demarcd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/demarcd/*.conf
 %attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/demarcd/*.cmds
+%attr(640,root,root) %config /etc/cron.d/%{name}
 %attr(750,root,root) /var/state/demarcd
