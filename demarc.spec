@@ -47,7 +47,7 @@ all from one centralized location.
 
 %description -l pl
 DEMARC to kompletny system monitorowania sieci pozwalaj±cy monitorowaæ
-ca³± sieæ serwerów z jednego interfejsu www.
+ca³± sieæ serwerów z jednego interfejsu WWW.
 
 Zamiast posiadaæ jeden program sprawdzaj±cy integralno¶æ plików, inny
 program monitoruj±cy po³±czenia i stan Twojej sieci, i jeszcze jeden
@@ -72,7 +72,7 @@ servers.
 
 %description client -l pl
 DEMARC to kompletny system monitorowania sieci pozwalaj±cy monitorowaæ
-ca³± sieæ serwerów z jednego interfejsu www.
+ca³± sieæ serwerów z jednego interfejsu WWW.
 
 To jest program kliencki, który powinien byæ zainstalowany na
 wszystkich monitorowanych serwerach.
