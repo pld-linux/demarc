@@ -22,7 +22,7 @@ BuildRequires:	perl-CGI
 BuildRequires:	perl-DBI
 BuildRequires:	perl-Msql-Mysql-modules
 BuildRequires:	perl-Digest-MD5
-# BuildRequires:  perl(Apache::DBI)  (what package? FIXME)
+# BuildRequires:	perl(Apache::DBI)  (what package? FIXME)
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	apache
@@ -108,10 +108,10 @@ if [ "$1" = "1" ] ; then
 fi
 /sbin/chkconfig --add demarcd
 if [ -f /var/lock/subsys/demarcd ]; then
-        /etc/rc.d/init.d/demarcd restart 1>&2
+	/etc/rc.d/init.d/demarcd restart 1>&2
 else
 	echo "Run \"%{_sbindir}/demarcd -I\" to install new snort sensor and then"
-        echo "run \"/etc/rc.d/init.d/demarcd start\" to start demarcd daemon."
+	echo "run \"/etc/rc.d/init.d/demarcd start\" to start demarcd daemon."
 	echo "Note that in most cases there is no need to start \"snort\" as"
 	echo "separate daemon, so turn it off using \"/sbin/chkconfig snort off\"."
 fi
