@@ -1,6 +1,6 @@
-diff -urN demarc-1.05-RC1.org/bin/demarcd demarc-1.05-RC1/bin/demarcd
---- demarc-1.05-RC1.org/bin/demarcd	Sat Sep  1 14:40:42 2001
-+++ demarc-1.05-RC1/bin/demarcd	Sat Sep  1 14:43:17 2001
+diff -Nur demarc-1.05-RC1.orig/bin/demarcd demarc-1.05-RC1/bin/demarcd
+--- demarc-1.05-RC1.orig/bin/demarcd	Wed Aug 29 20:05:11 2001
++++ demarc-1.05-RC1/bin/demarcd	Fri Sep 28 20:09:16 2001
 @@ -78,7 +78,7 @@
  # Get all options from the command line / conf file:
  getopts("hDi:c:Ff:SkI",\%opts) || &print_usage;
@@ -10,7 +10,7 @@ diff -urN demarc-1.05-RC1.org/bin/demarcd demarc-1.05-RC1/bin/demarcd
  %conf = &parse_config;
  
  ############
-@@ -104,12 +104,12 @@
+@@ -104,19 +104,19 @@
  
  ##########
  # Path/filename of logfile
@@ -25,6 +25,23 @@ diff -urN demarc-1.05-RC1.org/bin/demarcd demarc-1.05-RC1/bin/demarcd
  ##########
  
  my $temp_binary_directories 		= &get_config_value("binary_dirs");
+ @binary_dirs						= split(/,/,$temp_binary_directories);
+ 
+ if (!(@binary_dirs)){
+-	@binary_dirs = qw ( /sbin /usr/sbin/ /usr/local/sbin
++	@binary_dirs = qw ( /sbin /usr/sbin /usr/local/sbin
+ 	                    /bin  /usr/bin  /usr/local/bin
+ 	                    /usr/libexec /usr/local/libexec
+         );
+@@ -127,7 +127,7 @@
+ my $w_binary					= &binary_search($conf{'w_binary'},"w");
+ my $su_binary					= &binary_search($conf{'su_binary'},"su");
+ my $ping_binary					= &binary_search($conf{'ping_binary'},"ping");
+-my $mailprog					= &binary_search($conf{'mailprog'},"sendmail");
++my $mailprog					= &binary_search($conf{'mailprog'},"/usr/lib/sendmail");
+ my $ps_binary					= &binary_search($conf{'ps_binary'},"ps");
+ my $df_binary					= &binary_search($conf{'df_binary'},"df");
+ my $lynx_binary					= &binary_search($conf{'lynx_binary'},"lynx",1);
 @@ -152,7 +152,7 @@
  
  if ($run_snort_locally){
@@ -34,9 +51,9 @@ diff -urN demarc-1.05-RC1.org/bin/demarcd demarc-1.05-RC1/bin/demarcd
  	$snort_options               	= &get_config_value("snort_options") || " -o -D -q ";#Special options for snort
  }
  
-diff -urN demarc-1.05-RC1.org/cgi/DEMARC_config.pm demarc-1.05-RC1/cgi/DEMARC_config.pm
---- demarc-1.05-RC1.org/cgi/DEMARC_config.pm	Sat Sep  1 14:40:42 2001
-+++ demarc-1.05-RC1/cgi/DEMARC_config.pm	Sat Sep  1 14:44:04 2001
+diff -Nur demarc-1.05-RC1.orig/cgi/DEMARC_config.pm demarc-1.05-RC1/cgi/DEMARC_config.pm
+--- demarc-1.05-RC1.orig/cgi/DEMARC_config.pm	Wed Aug 29 15:59:49 2001
++++ demarc-1.05-RC1/cgi/DEMARC_config.pm	Fri Sep 28 20:05:56 2001
 @@ -23,7 +23,7 @@
  
  $conf{'whois_command'}                   = "/usr/bin/whois";
@@ -46,9 +63,9 @@ diff -urN demarc-1.05-RC1.org/cgi/DEMARC_config.pm demarc-1.05-RC1/cgi/DEMARC_co
  $conf{'ping_command'}                    = "/usr/sbin/ping";
  
  $conf{'allow_anonymous_access'}          = 0;
-diff -urN demarc-1.05-RC1.org/cgi/demarc demarc-1.05-RC1/cgi/demarc
---- demarc-1.05-RC1.org/cgi/demarc	Sat Sep  1 14:40:42 2001
-+++ demarc-1.05-RC1/cgi/demarc	Sat Sep  1 14:44:52 2001
+diff -Nur demarc-1.05-RC1.orig/cgi/demarc demarc-1.05-RC1/cgi/demarc
+--- demarc-1.05-RC1.orig/cgi/demarc	Wed Aug 29 20:05:11 2001
++++ demarc-1.05-RC1/cgi/demarc	Fri Sep 28 20:05:57 2001
 @@ -62,7 +62,7 @@
  BEGIN{
  	# CHANGE this to reflect where you have your StaticServices.pm module
@@ -67,9 +84,9 @@ diff -urN demarc-1.05-RC1.org/cgi/demarc demarc-1.05-RC1/cgi/demarc
  my $template_subdir  = "/templates";
  my $home_url         = "$v_base_path/$this_program";
  ##############################################
-diff -urN demarc-1.05-RC1.org/conf/demarcd.conf demarc-1.05-RC1/conf/demarcd.conf
---- demarc-1.05-RC1.org/conf/demarcd.conf	Sat Sep  1 14:40:42 2001
-+++ demarc-1.05-RC1/conf/demarcd.conf	Sat Sep  1 14:46:41 2001
+diff -Nur demarc-1.05-RC1.orig/conf/demarcd.conf demarc-1.05-RC1/conf/demarcd.conf
+--- demarc-1.05-RC1.orig/conf/demarcd.conf	Wed Aug 29 16:04:18 2001
++++ demarc-1.05-RC1/conf/demarcd.conf	Fri Sep 28 20:09:00 2001
 @@ -49,16 +49,16 @@
  #
  
@@ -103,3 +120,34 @@ diff -urN demarc-1.05-RC1.org/conf/demarcd.conf demarc-1.05-RC1/conf/demarcd.con
  
  # If you have multiple interfaces and want to have snort monitor ONLY one of them,
  # name the interface you wish to monitor below (ie "eth0")
+@@ -84,7 +84,7 @@
+ 
+ 
+ # Directories in which to search for needed binaries
+-binary_dirs = "/sbin,/usr/sbin/,/usr/local/sbin,/bin,/usr/bin,/usr/local/bin,/usr/libexec,/usr/locl/libexec"
++binary_dirs = "/sbin,/usr/sbin,/usr/local/sbin,/bin,/usr/bin,/usr/local/bin,/usr/libexec,/usr/locl/libexec"
+ 
+ ## Paths to general system binaries
+ #
+@@ -93,14 +93,14 @@
+ #listed above in the "binary_dirs" variable
+ 
+ #grep_binary	= "/bin/grep"
+-#w_binary		= "/usr/bin/w"
+-#su_binary		= "/usr/bin/su"
++#w_binary	= "/usr/bin/w"
++#su_binary	= "/bin/su"
+ #ping_binary	= "/sbin/ping"
+-#mailprog		= "/usr/sbin/sendmail"
+-#ps_binary		= "/bin/ps"
+-#df_binary		= "/bin/df"
+-#lynx_binary    = "/usr/local/bin/lynx -width=1000000000000000"
+-#tar_binary     = "/usr/bin/tar"
++#mailprog	= "/usr/lib/sendmail"
++#ps_binary	= "/bin/ps"
++#df_binary	= "/bin/df"
++#lynx_binary    = "/usr/bin/lynx -width=1000000000000000"
++#tar_binary     = "/bin/tar"
+ 
+ ##########
+ 

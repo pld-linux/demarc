@@ -5,18 +5,19 @@ Summary:	Network monitoring program
 Summary(pl):	Program do monitorowania sieci
 Name:		demarc
 Version:	%{ver}.%{subver}
-Release:	1
-License:	http://www.demarc.org/license/
+Release:	2
+License:	http://www.demarc.org/license/ (Free for non-commercial use)
 Group:		Networking
 Group(de):	Netzwerkwesen
 Group(es):	Red
 Group(pl):	Sieciowe
 Group(pt_BR):	Rede
-Source0:	http://www.demarc.org/downloads/demarc-105/demarc-%{ver}-%{subver}.tar.gz
+Source0:	http://www.demarc.org/downloads/demarc-105/%{name}-%{ver}-%{subver}.tar.gz
 Source1:	%{name}-apache.conf
 Source2:	%{name}.init
 Source3:	%{name}.cron
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-whois-fix.patch
 URL:		http://www.demarc.org/
 BuildRequires:	rpm-perlprov >= 4.0
 BuildRequires:	perl >= 5.6
@@ -59,28 +60,34 @@ tylko mo¿esz monitorowaæ stan ró¿nych maszyn w Twojej sieci ale tak¿e
 mo¿esz reagowaæ na zmiany z jednej centralnej lokalizacji.
 
 %package client
-Summary:        Network monitoring program - client
-Summary(pl):    Program do monitorowania sieci - klient
+Summary:	Network monitoring program - client
+Summary(pl):	Program do monitorowania sieci - klient
 Requires:	snort(mysql) >= 1.8.1
-Group:          Networking
+Group:		Networking
+Group(de):	Netzwerkwesen
+Group(es):	Red
+Group(pl):	Sieciowe
+Group(pt_BR):	Rede
 
 %description client
 DEMARC is an all-inclusive network monitoring program that allows you
 to monitor an entire network of servers from one powerful web
 interface.
 
-This is client program which should be installed on all monitored servers.
+This is client program which should be installed on all monitored
+servers.
 
 %description -l pl client
 DEMARC to kompletny system monitorowania sieci pozwalaj±cy monitorowaæ
 ca³± sieæ serwerów z jednego interfejsu www.
 
-To jest program kliencki, który powinien byæ zainstalowany na wszystkich
-monitorowanych serwerach.
+To jest program kliencki, który powinien byæ zainstalowany na
+wszystkich monitorowanych serwerach.
 
 %prep
 %setup -q -n %{name}-%{ver}-%{subver}
 %patch0 -p1
+%patch1 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -103,9 +110,7 @@ gzip -9nf install/{CHAN*,INS*,LIC*}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-echo 'Remember to add "Include demarc.conf" to httpd.conf and note that'
-echo 'in most cases there is no need to start "snort" as separate'
-echo 'daemon, so turn it off using "/sbin/chkconfig snort off".'
+echo 'Remember to add "Include demarc.conf" to httpd.conf.'
 
 %post client
 if [ "$1" = "1" ] ; then
@@ -117,6 +122,8 @@ if [ -f /var/lock/subsys/demarcd ]; then
 else
 	echo "Run \"%{_sbindir}/demarcd -I\" to install new snort sensor and then"
         echo "run \"/etc/rc.d/init.d/demarcd start\" to start demarcd daemon."
+	echo "Note that in most cases there is no need to start \"snort\" as"
+	echo "separate daemon, so turn it off using \"/sbin/chkconfig snort off\"."
 fi
 
 

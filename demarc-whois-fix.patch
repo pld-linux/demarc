@@ -1,0 +1,15 @@
+diff -Nur demarc-1.05-RC1.orig/cgi/demarc demarc-1.05-RC1/cgi/demarc
+--- demarc-1.05-RC1.orig/cgi/demarc	Fri Sep 28 20:05:57 2001
++++ demarc-1.05-RC1/cgi/demarc	Fri Sep 28 20:14:11 2001
+@@ -2789,9 +2789,9 @@
+ 
+ ##########
+ # Check to see which syntax the whois command should take:
+-my $temp_result = `whois 2>&1`;
++my $temp_result = `$whois_command 2>&1`;
+ 
+-if ($temp_result=~/-h host/){
++if ($temp_result=~/-h host/i){
+ 	#then this is a BSD type whois
+ 	$result .= `$whois_command -h $server $host`;
+ }
