@@ -1,0 +1,105 @@
+diff -urN demarc-1.05-RC1.org/bin/demarcd demarc-1.05-RC1/bin/demarcd
+--- demarc-1.05-RC1.org/bin/demarcd	Sat Sep  1 14:40:42 2001
++++ demarc-1.05-RC1/bin/demarcd	Sat Sep  1 14:43:17 2001
+@@ -78,7 +78,7 @@
+ # Get all options from the command line / conf file:
+ getopts("hDi:c:Ff:SkI",\%opts) || &print_usage;
+ &print_usage if $opts{'h'};
+-my $config_file = $opts{'f'} || "/usr/local/demarc/conf/demarcd.conf";
++my $config_file = $opts{'f'} || "/etc/demarcd/demarcd.conf";
+ %conf = &parse_config;
+ 
+ ############
+@@ -104,12 +104,12 @@
+ 
+ ##########
+ # Path/filename of logfile
+-my $logfile							= &get_config_value("logfile") || "/usr/local/demarc/log/demarcd_log";
++my $logfile							= &get_config_value("logfile") || "/var/log/demarcd";
+ ##########
+ 
+ ##########
+ # Path/filename of allowed commands file
+-my $cmdfile							= &get_config_value("cmdfile") || "/usr/local/demarc/conf/regen.cmds";
++my $cmdfile							= &get_config_value("cmdfile") || "/etc/demarcd/regen.cmds";
+ ##########
+ 
+ my $temp_binary_directories 		= &get_config_value("binary_dirs");
+@@ -152,7 +152,7 @@
+ 
+ if ($run_snort_locally){
+ 	$snort_binary_path      		= &binary_search($conf{'snort_binary'},"snort");
+-	$snort_conf_file  = $opts{'c'} || &get_config_value("snort_conf_file") || "/usr/local/demarc/conf/snort.conf";
++	$snort_conf_file  = $opts{'c'} || &get_config_value("snort_conf_file") || "/var/state/demarcd/snort.conf";
+ 	$snort_options               	= &get_config_value("snort_options") || " -o -D -q ";#Special options for snort
+ }
+ 
+diff -urN demarc-1.05-RC1.org/cgi/DEMARC_config.pm demarc-1.05-RC1/cgi/DEMARC_config.pm
+--- demarc-1.05-RC1.org/cgi/DEMARC_config.pm	Sat Sep  1 14:40:42 2001
++++ demarc-1.05-RC1/cgi/DEMARC_config.pm	Sat Sep  1 14:44:04 2001
+@@ -23,7 +23,7 @@
+ 
+ $conf{'whois_command'}                   = "/usr/bin/whois";
+ $conf{'traceroute_command'}              = "/usr/sbin/traceroute";
+-$conf{'nslookup_command'}                = "/usr/sbin/nslookup";
++$conf{'nslookup_command'}                = "/usr/bin/nslookup";
+ $conf{'ping_command'}                    = "/usr/sbin/ping";
+ 
+ $conf{'allow_anonymous_access'}          = 0;
+diff -urN demarc-1.05-RC1.org/cgi/demarc demarc-1.05-RC1/cgi/demarc
+--- demarc-1.05-RC1.org/cgi/demarc	Sat Sep  1 14:40:42 2001
++++ demarc-1.05-RC1/cgi/demarc	Sat Sep  1 14:44:52 2001
+@@ -62,7 +62,7 @@
+ BEGIN{
+ 	# CHANGE this to reflect where you have your StaticServices.pm module
+ 	# which SHOULD be the same as where this script resides
+-	push (@INC,"/usr/local/demarc/cgi");
++	push (@INC,"/usr/share/demarc/cgi");
+ };
+ 
+ use StaticServices; #Make SURE your cgi-bin directory is in your INC array above
+@@ -116,7 +116,7 @@
+ my $v_graphics_path  = "/dm_images";
+ my $this_program     = "demarc";
+ my $v_base_path      = $conf{'v_base_path'};
+-my $base_path        = "/usr/local/demarc/cgi";
++my $base_path        = "/usr/share/demarc/cgi";
+ my $template_subdir  = "/templates";
+ my $home_url         = "$v_base_path/$this_program";
+ ##############################################
+diff -urN demarc-1.05-RC1.org/conf/demarcd.conf demarc-1.05-RC1/conf/demarcd.conf
+--- demarc-1.05-RC1.org/conf/demarcd.conf	Sat Sep  1 14:40:42 2001
++++ demarc-1.05-RC1/conf/demarcd.conf	Sat Sep  1 14:46:41 2001
+@@ -49,16 +49,16 @@
+ #
+ 
+ # Base path where DEMARC is installed: "/usr/local/demarc" is the default / suggested location
+-base_path 					= /usr/local/demarc
+-config_file                 = /usr/local/demarc/conf/demarcd.conf
+-pid_path                    = /usr/local/demarc/run
++base_path 		    = /usr/share/demarc
++config_file                 = /etc/demarcd/demarcd.conf
++pid_path                    = /var/run
+ 
+ 
+ # Path/filename of logfile
+-logfile						= "/usr/local/demarc/log/demarcd_log"
++logfile						= "/var/log/demarcd"
+ 
+ # Path to allowed regenration commands/users list
+-cmdfile						= "/usr/local/demarc/conf/regen.cmds"
++cmdfile						= "/etc/demarcd/regen.cmds"
+ 
+ 
+ ###############
+@@ -68,8 +68,8 @@
+ run_snort_locally			= yes
+ 
+ # Paths to snort related files
+-snort_binary_path  		    = "/usr/local/bin/snort"
+-snort_conf_file             = "/usr/local/demarc/conf/snort.conf"
++snort_binary_path  		    = "/usr/sbin/snort"
++snort_conf_file             = "/var/state/demarcd/snort.conf"
+ 
+ # If you have multiple interfaces and want to have snort monitor ONLY one of them,
+ # name the interface you wish to monitor below (ie "eth0")

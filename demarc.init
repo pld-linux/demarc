@@ -1,0 +1,69 @@
+#!/bin/sh
+#
+# demarcd	Network monitoring daemon
+#
+# chkconfig:	345 50 50
+# description:	Netowk monitoring daemon which uses snort as NIDS
+#
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config
+[ -f /etc/sysconfig/demarcd ] && . /etc/sysconfig/demarcd
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+        if [ ! -f /var/lock/subsys/network ]; then
+                # nls "ERROR: Networking is down. %s can't be run." <service>
+                msg_network_down demarcd
+                exit 1
+        fi
+else
+        exit 0
+fi
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+        if [ ! -f /var/lock/subsys/demarcd ]; then
+		msg_starting demarcd
+		daemon demarcd
+	        RETVAL=$?
+    		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/demarcd
+	else
+        	msg_Already_Running demarcd
+	        exit 1
+	fi
+	;;
+  stop)
+        # Stop daemons.
+	if [ -f /var/lock/subsys/demarcd ]; then
+                msg_stopping demarcd
+                killproc demarcd -TERM
+                rm -f /var/lock/subsys/demarcd > /dev/null 2>&1
+        else
+		msg_Not_Running demarcd
+	        exit 1
+	fi
+	;;
+  status)
+	status demarcd
+	RETVAL=$?
+	;;
+  restart|reload)
+	$0 stop
+	$0 start
+	;;
+  *)
+	msg_Usage "$0 {start|stop|restart|status}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+
