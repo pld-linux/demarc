@@ -96,8 +96,6 @@ install conf/*			$RPM_BUILD_ROOT/etc/demarcd
 cp -ar  cgi images		$RPM_BUILD_ROOT%{_datadir}/demarc
 install install/{c*,d*,p*}	$RPM_BUILD_ROOT%{_datadir}/demarc
 
-gzip -9nf install/{CHAN*,INS*,LIC*}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -129,7 +127,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc install/*.gz
+%doc install/{CHAN*,INS*,LIC*} 
 %dir %{_datadir}/demarc
 %{_datadir}/demarc/create_mysql_demarc
 %{_datadir}/demarc/db_patch_queries
