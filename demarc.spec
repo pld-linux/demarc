@@ -50,7 +50,7 @@ all from one centralized location.
 DEMARC to kompletny system monitorowania sieci pozwalaj±cy monitorowaæ
 ca³± sieæ serwerów z jednego interfejsu www.
 
-Zamiast posiadaæ jeden program sprawdzaj±cy integralno¶c plików, inny
+Zamiast posiadaæ jeden program sprawdzaj±cy integralno¶æ plików, inny
 program monitoruj±cy po³±czenia i stan Twojej sieci, i jeszcze jeden
 program monitoruj±cy sieæ w celach detekcji intruzów wystarczy DEMARC
 ³±cz±cy w sobie te trzy us³ugi w jednym programie klient/serwer. Nie
@@ -60,7 +60,7 @@ mo¿esz reagowaæ na zmiany z jednej centralnej lokalizacji.
 %package client
 Summary:        Network monitoring program - client
 Summary(pl):    Program do monitorowania sieci - klient
-Requires:	snort >= 1.8.1
+Requires:	snort(mysql) >= 1.8.1
 Group:          Networking
 
 %description client
