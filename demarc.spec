@@ -84,10 +84,9 @@ wszystkich monitorowanych serwerach.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,cron.d,demarcd,httpd}
-install -d $RPM_BUILD_ROOT%{_sbindir}
-install -d $RPM_BUILD_ROOT%{_datadir}/demarc/{images,cgi}
-install -d $RPM_BUILD_ROOT/%{_var}/lib/demarcd
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,cron.d,demarcd,httpd} \
+	$RPM_BUILD_ROOT{%{_sbindir},%{_datadir}/demarc/{images,cgi}} \
+	$RPM_BUILD_ROOT%{_var}/lib/demarcd
 
 install %{SOURCE1}		$RPM_BUILD_ROOT/etc/httpd/%{name}.conf
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc/rc.d/init.d/demarcd
