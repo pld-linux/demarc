@@ -9,6 +9,7 @@ Release:	3
 License:	http://www.demarc.org/license/ (Free for non-commercial use)
 Group:		Networking
 Source0:	http://www.demarc.org/downloads/demarc-105/%{name}-%{ver}-%{subver}.tar.gz
+# Source0-md5:	adf1550b8e7a4936c4b37ac214704f27
 Source1:	%{name}-apache.conf
 Source2:	%{name}.init
 Source3:	%{name}.cron
