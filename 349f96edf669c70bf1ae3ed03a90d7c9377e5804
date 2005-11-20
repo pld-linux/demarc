@@ -1,0 +1,4 @@
+- moved snort note to -client %post
+- added more path changes to config patch
+- added whois-fix which fixes detection of BSD-style whois
+- release 2
