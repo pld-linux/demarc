@@ -1,0 +1,2 @@
+- removed (redundant) Require: rc-scripts rule.
+  NOTE: /var/state/demarcd isn't FHS compliant.
