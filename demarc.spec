@@ -25,7 +25,7 @@ BuildRequires:	perl-devel >= 1:5.6
 BuildRequires:	rpm-perlprov >= 4.1-13
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
-Requires:	apache
+Requires:	webserver = apache
 Requires:	/etc/cron.d
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
