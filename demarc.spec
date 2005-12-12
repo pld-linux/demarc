@@ -23,10 +23,10 @@ BuildRequires:	perl-Digest-MD5
 BuildRequires:	perl-Msql-Mysql-modules
 BuildRequires:	perl-devel >= 1:5.6
 BuildRequires:	rpm-perlprov >= 4.1-13
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
-Requires:	webserver = apache
 Requires:	/etc/cron.d
+Requires:	rc-scripts
+Requires:	webserver = apache
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -92,7 +92,7 @@ install %{SOURCE1}		$RPM_BUILD_ROOT/etc/httpd/%{name}.conf
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc/rc.d/init.d/demarcd
 install %{SOURCE3}		$RPM_BUILD_ROOT/etc/cron.d/%{name}
 install bin/demarcd		$RPM_BUILD_ROOT%{_sbindir}
-install conf/*			$RPM_BUILD_ROOT/etc/demarcd
+install conf/* $RPM_BUILD_ROOT%{_sysconfdir}/demarcd
 cp -ar  cgi images		$RPM_BUILD_ROOT%{_datadir}/demarc
 install install/{c*,d*,p*}	$RPM_BUILD_ROOT%{_datadir}/demarc
 
@@ -144,14 +144,14 @@ fi
 %dir %{_datadir}/demarc/images
 %{_datadir}/demarc/images/*
 
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/httpd/demarc.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/httpd/demarc.conf
 
 %files client
 %defattr(644,root,root,755)
 %attr(754,root,root) /etc/rc.d/init.d/demarcd
 %attr(755,root,root) %{_sbindir}/demarcd
-%attr(750,root,root) %dir /etc/demarcd
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/demarcd/*.conf
-%attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/demarcd/*.cmds
+%attr(750,root,root) %dir %{_sysconfdir}/demarcd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/demarcd/*.conf
+%attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/demarcd/*.cmds
 %attr(640,root,root) %config /etc/cron.d/%{name}
 %attr(750,root,root) %{_var}/lib/demarcd
