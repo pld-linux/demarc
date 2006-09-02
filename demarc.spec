@@ -59,8 +59,8 @@ mo¿esz reagowaæ na zmiany z jednej centralnej lokalizacji.
 %package client
 Summary:	Network monitoring program - client
 Summary(pl):	Program do monitorowania sieci - klient
-Requires:	snort(mysql) >= 1.8.1
 Group:		Networking
+Requires:	snort(mysql) >= 1.8.1
 
 %description client
 DEMARC is an all-inclusive network monitoring program that allows you
@@ -88,12 +88,12 @@ install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,cron.d,demarcd,httpd} \
 	$RPM_BUILD_ROOT{%{_sbindir},%{_datadir}/demarc/{images,cgi}} \
 	$RPM_BUILD_ROOT%{_var}/lib/demarcd
 
-install %{SOURCE1}		$RPM_BUILD_ROOT/etc/httpd/%{name}.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/%{name}.conf
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc/rc.d/init.d/demarcd
 install %{SOURCE3}		$RPM_BUILD_ROOT/etc/cron.d/%{name}
 install bin/demarcd		$RPM_BUILD_ROOT%{_sbindir}
 install conf/* $RPM_BUILD_ROOT%{_sysconfdir}/demarcd
-cp -ar  cgi images		$RPM_BUILD_ROOT%{_datadir}/demarc
+cp -a  cgi images		$RPM_BUILD_ROOT%{_datadir}/demarc
 install install/{c*,d*,p*}	$RPM_BUILD_ROOT%{_datadir}/demarc
 
 %clean
@@ -144,7 +144,7 @@ fi
 %dir %{_datadir}/demarc/images
 %{_datadir}/demarc/images/*
 
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/httpd/demarc.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd/demarc.conf
 
 %files client
 %defattr(644,root,root,755)
