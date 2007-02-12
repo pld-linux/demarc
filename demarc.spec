@@ -2,7 +2,7 @@
 %define ver	1.05
 %define subver	RC1
 Summary:	Network monitoring program
-Summary(pl):	Program do monitorowania sieci
+Summary(pl.UTF-8):   Program do monitorowania sieci
 Name:		demarc
 Version:	%{ver}.%{subver}
 Release:	4
@@ -45,20 +45,20 @@ program. Not only can you monitor the status of the different machines
 in your network, but you can also respond to changes in your network
 all from one centralized location.
 
-%description -l pl
-DEMARC to kompletny system monitorowania sieci pozwalaj±cy monitorowaæ
-ca³± sieæ serwerów z jednego interfejsu WWW.
+%description -l pl.UTF-8
+DEMARC to kompletny system monitorowania sieci pozwalajÄ…cy monitorowaÄ‡
+caÅ‚Ä… sieÄ‡ serwerÃ³w z jednego interfejsu WWW.
 
-Zamiast posiadaæ jeden program sprawdzaj±cy integralno¶æ plików, inny
-program monitoruj±cy po³±czenia i stan Twojej sieci, i jeszcze jeden
-program monitoruj±cy sieæ w celach detekcji intruzów wystarczy DEMARC
-³±cz±cy w sobie te trzy us³ugi w jednym programie klient/serwer. Nie
-tylko mo¿esz monitorowaæ stan ró¿nych maszyn w Twojej sieci ale tak¿e
-mo¿esz reagowaæ na zmiany z jednej centralnej lokalizacji.
+Zamiast posiadaÄ‡ jeden program sprawdzajÄ…cy integralnoÅ›Ä‡ plikÃ³w, inny
+program monitorujÄ…cy poÅ‚Ä…czenia i stan Twojej sieci, i jeszcze jeden
+program monitorujÄ…cy sieÄ‡ w celach detekcji intruzÃ³w wystarczy DEMARC
+Å‚Ä…czÄ…cy w sobie te trzy usÅ‚ugi w jednym programie klient/serwer. Nie
+tylko moÅ¼esz monitorowaÄ‡ stan rÃ³Å¼nych maszyn w Twojej sieci ale takÅ¼e
+moÅ¼esz reagowaÄ‡ na zmiany z jednej centralnej lokalizacji.
 
 %package client
 Summary:	Network monitoring program - client
-Summary(pl):	Program do monitorowania sieci - klient
+Summary(pl.UTF-8):   Program do monitorowania sieci - klient
 Group:		Networking
 Requires:	snort(mysql) >= 1.8.1
 
@@ -70,11 +70,11 @@ interface.
 This is client program which should be installed on all monitored
 servers.
 
-%description client -l pl
-DEMARC to kompletny system monitorowania sieci pozwalaj±cy monitorowaæ
-ca³± sieæ serwerów z jednego interfejsu WWW.
+%description client -l pl.UTF-8
+DEMARC to kompletny system monitorowania sieci pozwalajÄ…cy monitorowaÄ‡
+caÅ‚Ä… sieÄ‡ serwerÃ³w z jednego interfejsu WWW.
 
-To jest program kliencki, który powinien byæ zainstalowany na
+To jest program kliencki, ktÃ³ry powinien byÄ‡ zainstalowany na
 wszystkich monitorowanych serwerach.
 
 %prep
