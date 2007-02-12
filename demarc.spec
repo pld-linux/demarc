@@ -2,7 +2,7 @@
 %define ver	1.05
 %define subver	RC1
 Summary:	Network monitoring program
-Summary(pl.UTF-8):   Program do monitorowania sieci
+Summary(pl.UTF-8):	Program do monitorowania sieci
 Name:		demarc
 Version:	%{ver}.%{subver}
 Release:	4
@@ -58,7 +58,7 @@ możesz reagować na zmiany z jednej centralnej lokalizacji.
 
 %package client
 Summary:	Network monitoring program - client
-Summary(pl.UTF-8):   Program do monitorowania sieci - klient
+Summary(pl.UTF-8):	Program do monitorowania sieci - klient
 Group:		Networking
 Requires:	snort(mysql) >= 1.8.1
 
