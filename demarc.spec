@@ -1,7 +1,6 @@
 # TODO
 # - integrate pld webapps framework
 # - use pld %service
-# - %config noreplace
 %define ver	1.05
 %define subver	RC1
 %include	/usr/lib/rpm/macros.perl
@@ -157,5 +156,5 @@ fi
 %attr(750,root,root) %dir %{_sysconfdir}/demarcd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/demarcd/*.conf
 %attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/demarcd/*.cmds
-%attr(640,root,root) %config /etc/cron.d/%{name}
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/cron.d/%{name}
 %attr(750,root,root) %{_var}/lib/demarcd
