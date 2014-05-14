@@ -1,6 +1,10 @@
-%include	/usr/lib/rpm/macros.perl
+# TODO
+# - integrate pld webapps framework
+# - use pld %service
+# - %config noreplace
 %define ver	1.05
 %define subver	RC1
+%include	/usr/lib/rpm/macros.perl
 Summary:	Network monitoring program
 Summary(pl.UTF-8):	Program do monitorowania sieci
 Name:		demarc
@@ -24,7 +28,7 @@ BuildRequires:	perl-Msql-Mysql-modules
 BuildRequires:	perl-devel >= 1:5.6
 BuildRequires:	rpm-perlprov >= 4.1-13
 Requires(post,preun):	/sbin/chkconfig
-Requires:	/etc/cron.d
+Requires:	crondaemon
 Requires:	rc-scripts
 Requires:	webserver = apache
 BuildArch:	noarch
@@ -88,13 +92,13 @@ install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,cron.d,demarcd,httpd} \
 	$RPM_BUILD_ROOT{%{_sbindir},%{_datadir}/demarc/{images,cgi}} \
 	$RPM_BUILD_ROOT%{_var}/lib/demarcd
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/%{name}.conf
-install %{SOURCE2}		$RPM_BUILD_ROOT/etc/rc.d/init.d/demarcd
-install %{SOURCE3}		$RPM_BUILD_ROOT/etc/cron.d/%{name}
-install bin/demarcd		$RPM_BUILD_ROOT%{_sbindir}
-install conf/* $RPM_BUILD_ROOT%{_sysconfdir}/demarcd
-cp -a  cgi images		$RPM_BUILD_ROOT%{_datadir}/demarc
-install install/{c*,d*,p*}	$RPM_BUILD_ROOT%{_datadir}/demarc
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/%{name}.conf
+install -p %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/demarcd
+cp -p %{SOURCE3} $RPM_BUILD_ROOT/etc/cron.d/%{name}
+install -p bin/demarcd $RPM_BUILD_ROOT%{_sbindir}
+cp -p conf/* $RPM_BUILD_ROOT%{_sysconfdir}/demarcd
+cp -a cgi images $RPM_BUILD_ROOT%{_datadir}/demarc
+cp -p install/{c*,d*,p*} $RPM_BUILD_ROOT%{_datadir}/demarc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
