@@ -1,6 +1,5 @@
 # TODO
 # - integrate pld webapps framework
-# - use pld %service
 %define ver	1.05
 %define subver	RC1
 %include	/usr/lib/rpm/macros.perl
@@ -26,6 +25,7 @@ BuildRequires:	perl-Digest-MD5
 BuildRequires:	perl-Msql-Mysql-modules
 BuildRequires:	perl-devel >= 1:5.6
 BuildRequires:	rpm-perlprov >= 4.1-13
+BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
 Requires:	crondaemon
 Requires:	rc-scripts
@@ -110,21 +110,19 @@ if [ "$1" = "1" ] ; then
 	touch /var/log/demarcd && chmod 750 /var/log/demarcd
 fi
 /sbin/chkconfig --add demarcd
-if [ -f /var/lock/subsys/demarcd ]; then
-	/etc/rc.d/init.d/demarcd restart 1>&2
-else
-	echo "Run \"%{_sbindir}/demarcd -I\" to install new snort sensor and then"
-	echo "run \"/etc/rc.d/init.d/demarcd start\" to start demarcd daemon."
-	echo "Note that in most cases there is no need to start \"snort\" as"
-	echo "separate daemon, so turn it off using \"/sbin/chkconfig snort off\"."
-fi
+%service demarcd restart
+%banner -e -o %{name} <<EOF
 
+Run "%{_sbindir}/demarcd -I" to install new snort sensor and then
+run "service demarcd start" to start demarcd daemon.
+
+Note that in most cases there is no need to start "snort" as
+separate daemon, so turn it off using "chkconfig snort off".
+EOF
 
 %preun client
 if [ "$1" = "0" ] ; then
-	if [ -f /var/lock/subsys/demarcd ]; then
-		/etc/rc.d/init.d/demarcd stop 1>&2
-	fi
+	%service demarcd stop
 	/sbin/chkconfig --del demarcd
 fi
 
