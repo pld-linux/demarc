@@ -2,7 +2,6 @@
 # - integrate pld webapps framework
 %define ver	1.05
 %define subver	RC1
-%include	/usr/lib/rpm/macros.perl
 Summary:	Network monitoring program
 Summary(pl.UTF-8):	Program do monitorowania sieci
 Name:		demarc
